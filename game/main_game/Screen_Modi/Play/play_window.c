@@ -3,8 +3,8 @@
 
 #include "Forms/forms.h"
 
-void load_forms() {
-    configure_forms();
+void load_forms(form forms[7]) {
+    configure_forms(forms);
 }
 
 void drawBoard(Rectangle board, Rectangle start) {
@@ -23,7 +23,9 @@ void drawBoard(Rectangle board, Rectangle start) {
     DrawText(text, textX, textY, fontsize, WHITE);
 }
 
-void play_window(const int width,const int height) {
+void play_window(const int width,const int height) {         
+    form forms[7];
+    load_forms(forms);
 
     typedef enum {
         START,
@@ -47,11 +49,12 @@ void play_window(const int width,const int height) {
 
     drawBoard(board, start);
 
-
     Vector2 mouse_position = GetMousePosition();
     bool mouseOverStart = CheckCollisionPointRec(mouse_position, start);
 
     if (mouseOverStart && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsKeyPressed(KEY_ENTER)) {
         printf("\nStarting Game\n");
+
+        //Game Logic begins here
     }
 }
