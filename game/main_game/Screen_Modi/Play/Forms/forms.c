@@ -1,13 +1,5 @@
 #include <stdio.h>
-
-typedef struct block {
-    int x;
-    int y;
-} block;
-
-typedef struct form {
-    block blocks[4];
-} form;
+#include "forms.h"
 
 block set_block(int x, int y) {
     block value;
@@ -17,7 +9,6 @@ block set_block(int x, int y) {
 
     return value;
 }
-
 
 form laying_stroke() {
     form rows;
@@ -98,11 +89,13 @@ form zick_zack_mirrored() {
     return rows;
 }
 
+void configure_forms(form forms[7]) {
 
-
-void configure_forms() {
-    int block_height = 25;
-    int block_width = 25;
-    
-    block minimal_block = set_block(25, 25);
+    forms[0] = laying_stroke();
+    forms[1] = four_blocks();
+    forms[2] = laying_t();
+    forms[3] = standing_l();
+    forms[4] = standing_l_mirrored();
+    forms[5] = zick_zack();
+    forms[6] = zick_zack_mirrored();
 }
