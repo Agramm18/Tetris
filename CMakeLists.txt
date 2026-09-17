@@ -20,6 +20,7 @@ add_executable(tetris
     game/main_game/Screen_Modi/Play/play_window.c
     game/main_game/Screen_Modi/Highscoores/highscore_window.c
     game/main_game/Screen_Modi/Game_Mode/game_modus.c
+    game/main_game/Screen_Modi/Play/Forms/forms.c
 
 )
 
@@ -30,6 +31,7 @@ target_include_directories(tetris PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/game/main_game/Screen_Modi/Play
     ${CMAKE_CURRENT_SOURCE_DIR}/game/main_game/Screen_Modi/Highscoores
     ${CMAKE_CURRENT_SOURCE_DIR}/game/main_game/Screen_Modi/Game_Mode
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/main_game/Screen_Modi/Game_Mode/Play/Forms
 )
 
 target_link_libraries(tetris PRIVATE
