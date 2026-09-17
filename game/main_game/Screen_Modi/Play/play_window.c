@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include "raylib.h"
 
+#include "Forms/forms.h"
+
+void load_forms() {
+    configure_forms();
+}
+
 void drawBoard(Rectangle board, Rectangle start) {
     DrawRectangleRec(board, GRAY);
 
