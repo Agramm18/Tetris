@@ -24,16 +24,26 @@ void load_forms(form forms[7]) {
     configure_forms(forms);
 }
 
-void board_logic(board_play_state *state) {
+void board_logic(PlayState *state, playing_field *playField) {
     typedef struct {
         Rectangle board;
         Rectangle startButton;
     } StartBoard;
-    
+
     switch (*state) {
         
-        case START: {
+        case LOADING_GAME_SCREEN: {
+            printf("\nLoading Game Screen\n");
+            
+            *state = START_GAME;
+            break;
+        }
+
+
+        case START_GAME: {
             StartBoard startBoard;
+
+            printf("\nInitializing Board\n");
 
             startBoard.board = (Rectangle) {
                 50,
@@ -61,19 +71,53 @@ void board_logic(board_play_state *state) {
             if (mouseOverStart && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsKeyPressed(KEY_ENTER)) {
         
                 *state = PLAYING;
-                printf("\nExecuting Game Modus");
+                printf("\nExecuting Game Modus\n");
             }
 
+            break;
+
+        }
+
+        case PLAYING: {
+
+            Rectangle board = {50, 100, 700, 600};
+
+            int points = 0;
+            int level = 1;
+            int fontsize = 20;
+
+            const char *pointsText = TextFormat("Points: %d", points);
+            int pointsWidth = MeasureText(pointsText, fontsize);
+
+            const char *levelText = TextFormat("Level %d", level);
+            int levelWidth = MeasureText(levelText, fontsize);
+
+            DrawRectangleRec(board, GRAY);
+
+            DrawText(pointsText, board.x + board.width - pointsWidth - 10,
+                board.y + 10,
+                fontsize,
+                GREEN
+            );
+            
+            DrawText(
+                levelText,
+                board.x + (board.width - levelWidth) / 2,
+                board.y + 10,
+                fontsize,
+                GREEN
+            );
+
+            DrawText("Game is Running", 250, 300, 30, GREEN);
             break;
         }
 
     }
 }
 
-void play_window(const int width,const int height) {         
+void play_window(const int width,const int height, PlayState *state, playing_field *playField) {         
     form forms[7];
     load_forms(forms);
 
-    static board_play_state current_modus = START;
-    board_logic(&current_modus);
+    board_logic(state, playField);
 }
