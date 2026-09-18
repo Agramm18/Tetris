@@ -24,7 +24,7 @@ void load_forms(form forms[7]) {
     configure_forms(forms);
 }
 
-void board_logic(PlayState *state, playing_field *playField) {
+void board_logic(PlayState *state, playing_field *playField, int *level, int *points) {
     typedef struct {
         Rectangle board;
         Rectangle startButton;
@@ -82,14 +82,12 @@ void board_logic(PlayState *state, playing_field *playField) {
 
             Rectangle board = {50, 100, 700, 600};
 
-            int points = 0;
-            int level = 1;
             int fontsize = 20;
 
-            const char *pointsText = TextFormat("Points: %d", points);
+            const char *pointsText = TextFormat("Points: %d", *points);
             int pointsWidth = MeasureText(pointsText, fontsize);
 
-            const char *levelText = TextFormat("Level %d", level);
+            const char *levelText = TextFormat("Level %d", *level);
             int levelWidth = MeasureText(levelText, fontsize);
 
             DrawRectangleRec(board, GRAY);
@@ -108,16 +106,29 @@ void board_logic(PlayState *state, playing_field *playField) {
                 GREEN
             );
 
-            DrawText("Game is Running", 250, 300, 30, GREEN);
+            const int cellSize = 25;
+
+            Rectangle playBoard = {
+                board.x + (board.width - FIELD_WIDTH * cellSize) / 2,
+                board.y + 60,
+                FIELD_WIDTH * cellSize,
+                FIELD_HEIGHT * cellSize
+            };
+
+            DrawRectangleRec(playBoard, BLACK);
+            DrawRectangleLinesEx(playBoard, 2.0f, WHITE);
+
             break;
         }
 
     }
 }
 
-void play_window(const int width,const int height, PlayState *state, playing_field *playField) {         
+void play_window(const int width,const int height, PlayState *state, playing_field *playField,int  *level,int *points) {         
+    
+
     form forms[7];
     load_forms(forms);
 
-    board_logic(state, playField);
+    board_logic(state, playField, level, points);
 }
