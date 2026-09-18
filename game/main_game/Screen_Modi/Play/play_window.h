@@ -17,7 +17,7 @@ typedef struct playing_field {
 } playing_field;
 
 void drawStartScreen(Rectangle board, Rectangle start);
-void board_logic(PlayState *state);
-void play_window(const int width,const int height, PlayState *state, playing_field *playingField);
+void board_logic(PlayState *state, playing_field *playField,int  *level, int *points);
+void play_window(const int width,const int height, PlayState *state, playing_field *playingField,int  *level,int *points);
 
 #endif
