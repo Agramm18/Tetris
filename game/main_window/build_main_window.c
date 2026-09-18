@@ -21,6 +21,13 @@ void configure_window(const int width, const int height,const char *window_name)
     } GameScreen;
 
     GameScreen current_screen = SCREEN_MENU;
+    PlayState current_state = LOADING_GAME_SCREEN;
+
+    playing_field playingField = {
+        .width = FIELD_WIDTH,
+        .height = FIELD_HEIGHT,
+        .cells = {0}
+    };
 
     InitWindow(width, height, window_name);
 
@@ -46,6 +53,7 @@ void configure_window(const int width, const int height,const char *window_name)
                     if (mouseOverPlay && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                         printf("The Mouse is over Play and Mouse was Pressed Switching to the Game\n");
                         current_screen  = SCREEN_GAME;
+                        current_state = LOADING_GAME_SCREEN;
 
                     } else if (mouseOverGameMode && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                         printf("The Mouse is over the Game Mode and Mouse was Pressed\n");
@@ -65,7 +73,7 @@ void configure_window(const int width, const int height,const char *window_name)
 
                     DrawText(TextFormat("FPS: %d", fps), width - 100, 25, 20, GREEN);
 
-                    play_window(width, height);
+                    play_window(width, height, &current_state, &playingField);
                     break;
                 }
 
@@ -96,7 +104,7 @@ void configure_window(const int width, const int height,const char *window_name)
             bool mouseOverExit = CheckCollisionPointRec(mouse_position, exitButton);
             bool mouseOverMenu = CheckCollisionPointRec(mouse_position, menuButton);
 
-            if (mouseOverExit && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            if (mouseOverExit && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsKeyPressed(KEY_ESCAPE)) {
                 printf("\nQuitting the Programm Good bye!!\n");
                 is_running = false;
             } else if (mouseOverMenu && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
