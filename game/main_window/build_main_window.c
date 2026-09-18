@@ -26,8 +26,11 @@ void configure_window(const int width, const int height,const char *window_name)
     playing_field playingField = {
         .width = FIELD_WIDTH,
         .height = FIELD_HEIGHT,
-        .cells = {0}
+        .cells = {{0}}
     };
+
+    int points = 0;
+    int level = 1;
 
     InitWindow(width, height, window_name);
 
@@ -73,7 +76,7 @@ void configure_window(const int width, const int height,const char *window_name)
 
                     DrawText(TextFormat("FPS: %d", fps), width - 100, 25, 20, GREEN);
 
-                    play_window(width, height, &current_state, &playingField);
+                    play_window(width, height, &current_state, &playingField, &level, &points);
                     break;
                 }
 
@@ -105,7 +108,7 @@ void configure_window(const int width, const int height,const char *window_name)
             bool mouseOverMenu = CheckCollisionPointRec(mouse_position, menuButton);
 
             if (mouseOverExit && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsKeyPressed(KEY_ESCAPE)) {
-                printf("\nQuitting the Programm Good bye!!\n");
+                printf("\nQuitting the Program Good bye!!\n");
                 is_running = false;
             } else if (mouseOverMenu && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                 printf("\nReturning to the Menu\n");
